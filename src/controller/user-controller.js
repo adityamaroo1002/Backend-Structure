@@ -3,6 +3,8 @@ const statusCode = require('http-status-codes');
 const {Logger} = require('../config/logger');
 const { error } = require('winston');
 
+const {SuccessResponse, ErrorResponse} = require('../utils/common/index')
+
 const createUserController = async (req, res) => {
   //console.log(req,"Checking.....");
   
@@ -16,21 +18,14 @@ const createUserController = async (req, res) => {
       gender: req.body.gender,
       fatherName: req.body.fatherName
     });
-    return res.status(statusCode.CREATED).json({
-      success: true,
-      message: "User Created succesfully",
-      data: userData,
-      error: {},
-    });
+    SuccessResponse.data = userData
+    return res.status(statusCode.CREATED).json(SuccessResponse);
   } catch (error) {
     // Logger.info("Not workinng create User");
+    ErrorResponse.message = "Some internal server"
+    ErrorResponse.error = error
     console.log(error)
-    return res.status(statusCode.INTERNAL_SERVER_ERROR).json({
-      success: false,
-      message: "Some internal server",
-      data: {},
-      error: error,
-    });
+    return res.status(statusCode.INTERNAL_SERVER_ERROR).json(ErrorResponse);
   }
   
 };
