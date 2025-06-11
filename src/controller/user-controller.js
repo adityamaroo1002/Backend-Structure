@@ -25,7 +25,7 @@ const createUserController = async (req, res) => {
     ErrorResponse.message = "Some internal server"
     ErrorResponse.error = error
     console.log(error)
-    return res.status(statusCode.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    return res.status(error.statusCode).json(ErrorResponse);
   }
   
 };
@@ -34,25 +34,57 @@ const createUserController = async (req, res) => {
 const getUsers = async(req,res) => {
   try{
   const userData = await UserService.getUserDetail();
-  return res.status(statusCode.OK).json({
-    success: true,
-    message: "All Data Fetch",
-    data: userData,
-    error: {}
-  })
+  SuccessResponse.data = userData;
+  SuccessResponse.message = "All data has been fecthed succesfully"
+  return res.status(statusCode.OK).json(SuccessResponse)
   }
 
   catch(error){
-   return res.status(statusCode.INTERNAL_SERVER_ERROR).json({
-      sucess: true,
-      message: "Api sgdfdg fine state",
-      data: {},
-      error: error
-    })
+    ErrorResponse.error = error
+   return res.status(error.status).json(ErrorResponse)
   }
 }
 
+const getSpecificUser = async(req,res) => {
+  try{
+    const id = req.params.id
+    console.log(id);
+  const userData = await UserService.getSpecificUser(id);
+  SuccessResponse.data = userData;
+  SuccessResponse.message = "All User has been fecthed succesfully"
+  return res.status(statusCode.OK).json(SuccessResponse)
+  }
+
+  catch(error){
+    ErrorResponse.error = error
+   return res
+   .status(error.statusCode).
+   json(ErrorResponse)
+  }
+}
+
+const deleteSpecificUser = async(req,res) => {
+  try{
+    const id = req.params.id
+    console.log(id);
+  const userData = await UserService.deleteSpecificUser(id);
+  SuccessResponse.data = userData;
+  SuccessResponse.message = "All User has been fecthed succesfully"
+  return res.status(statusCode.OK).json(SuccessResponse)
+  }
+
+  catch(error){
+    ErrorResponse.error = error
+   return res
+   .status(error.statusCode)
+   .json(ErrorResponse)
+  }
+}
+
+
 module.exports = {
   createUserController,
-  getUsers
+  getUsers,
+  getSpecificUser,
+  deleteSpecificUser
 }
