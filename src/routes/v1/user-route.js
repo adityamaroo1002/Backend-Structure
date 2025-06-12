@@ -7,5 +7,6 @@ router.post('/create_user',UserMiddleWare.validationCreate, UserController.creat
 router.get('/get_user',UserController.getUsers);
 router.post('/specific_user/:id', UserController.getSpecificUser)
 router.delete('/delete_user/:id', UserController.deleteSpecificUser)
+router.put('/update_user/:id', UserController.updateUserDetail)
 
 module.exports = router;

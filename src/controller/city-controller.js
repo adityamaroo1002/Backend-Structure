@@ -1,24 +1,22 @@
-const {UserService} = require('../service/index');
+const {CityService} = require('../service/index');
 const statusCode = require('http-status-codes');
 const {Logger} = require('../config/logger');
 const { error } = require('winston');
 
 const {SuccessResponse, ErrorResponse} = require('../utils/common/index')
 
-const createUserController = async (req, res) => {
+const createCityController = async (req, res) => {
   //console.log(req,"Checking.....");
   
   try {
     // Logger.info("Running create Aeroplane");
     console.log(req.body.name)
     console.log(req.body.userId)
-    const userData = await UserService.userCreate({
-      name: req.body.name,
-      userId: req.body.userId,
-      gender: req.body.gender,
-      fatherName: req.body.fatherName
+    const cityData = await CityService.cityCreate({
+      cityName: req.body.cityName
+      
     });
-    SuccessResponse.data = userData
+    SuccessResponse.data = cityData
     return res.status(statusCode.CREATED).json(SuccessResponse);
   } catch (error) {
     // Logger.info("Not workinng create User");
@@ -31,10 +29,10 @@ const createUserController = async (req, res) => {
 };
 
 
-const getUsers = async(req,res) => {
+const getCities = async(req,res) => {
   try{
-  const userData = await UserService.getUserDetail();
-  SuccessResponse.data = userData;
+  const cityData = await CityService.getCityDetail();
+  SuccessResponse.data = cityData;
   SuccessResponse.message = "All data has been fecthed succesfully"
   return res.status(statusCode.OK).json(SuccessResponse)
   }
@@ -45,13 +43,13 @@ const getUsers = async(req,res) => {
   }
 }
 
-const getSpecificUser = async(req,res) => {
+const getSpecificCity = async(req,res) => {
   try{
     const id = req.params.id
     console.log(id);
-  const userData = await UserService.getSpecificUser(id);
-  SuccessResponse.data = userData;
-  SuccessResponse.message = "All User has been fecthed succesfully"
+  const cityData = await CityService.getSpecificCity(id);
+  SuccessResponse.data = cityData;
+  SuccessResponse.message = "All City has been fecthed succesfully"
   return res.status(statusCode.OK).json(SuccessResponse)
   }
 
@@ -63,13 +61,13 @@ const getSpecificUser = async(req,res) => {
   }
 }
 
-const deleteSpecificUser = async(req,res) => {
+const deleteSpecificCity = async(req,res) => {
   try{
     const id = req.params.id
     console.log(id);
-  const userData = await UserService.deleteSpecificUser(id);
-  SuccessResponse.data = userData;
-  SuccessResponse.message = "All User has been fecthed succesfully"
+  const cityData = await CityService.deleteSpecificCity(id);
+  SuccessResponse.data = cityData;
+  SuccessResponse.message = "All City has been fecthed succesfully"
   return res.status(statusCode.OK).json(SuccessResponse)
   }
 
@@ -81,18 +79,15 @@ const deleteSpecificUser = async(req,res) => {
   }
 };
 
-const updateUserDetail = async (req, res) => {
+const updateCityDetail = async (req, res) => {
   //console.log(req,"Checking.....");
   
   try {
     // Logger.info("Running create Aeroplane");
-    const userData = await UserService.updateUserData({
-      name: req.body.name,
-      userId: req.body.userId,
-      gender: req.body.gender,
-      fatherName: req.body.fatherName
+    const cityData = await CityService.updateCityData({
+     cityName: req.body.cityName
     }, req.params.id);
-    SuccessResponse.data = userData
+    SuccessResponse.data = cityData
     return res.status(statusCode.OK).json(SuccessResponse);
   } catch (error) {
     // Logger.info("Not workinng create User");
@@ -106,9 +101,9 @@ const updateUserDetail = async (req, res) => {
 
 
 module.exports = {
-  createUserController,
-  getUsers,
-  getSpecificUser,
-  deleteSpecificUser,
-  updateUserDetail
+  createCityController,
+  getCities,
+  getSpecificCity,
+  deleteSpecificCity,
+  updateCityDetail
 }
