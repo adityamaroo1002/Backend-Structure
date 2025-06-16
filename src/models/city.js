@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      this.hasMany(models.Office, {
+        foreignKey: "cityId"
+      })
     }
   }
   City.init({
@@ -24,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'City',
   });
 
-  sequelize.sync({ alter: false }); // Safer: Updates the table to match the model
+  City.sync({ alter: false}); // Safer: Updates the table to match the model
 
   return City;
 };
