@@ -1,5 +1,6 @@
 module.exports = {
   UserService: require('./user-service'),
   CityService: require('./city-services'),
-  OfficeService: require('./office-service')
+  OfficeService: require('./office-service'),
+  CompanyService: require('./company-service')
 }

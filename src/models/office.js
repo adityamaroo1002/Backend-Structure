@@ -12,8 +12,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       this.belongsTo(models.City, {
-        foreignKey: 'cityId'
+        foreignKey: 'cityId',
+      });
+      this.hasMany(models.Company, {
+        foreignKey: "officeId"
       })
+      
     }
   }
   Office.init({
@@ -37,6 +41,6 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Office',
   });
 
-   Office.sync({ alter: false }); // Safer: Updates the table to match the model
+   Office.sync({alter: false}); // Safer: Updates the table to match the model
   return Office;
 };

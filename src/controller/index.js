@@ -2,5 +2,6 @@ module.exports = {
   InfoController: require('./info_controller'),
   UserController: require('./user-controller'),
   CityController: require('./city-controller'),
-  OfficeController: require('./office-controller')
+  OfficeController: require('./office-controller'),
+  CompanyController: require('./company-controller')
 }
